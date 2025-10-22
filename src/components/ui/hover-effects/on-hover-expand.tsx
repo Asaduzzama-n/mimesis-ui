@@ -13,6 +13,7 @@ interface OnHoverExpandProps {
   data: CardData[];
   orientation?: 'horizontal' | 'vertical';
   className?: string;
+  cardClassName?: string;
   cardHeight?: string;
   cardWidth?: string;
   expandedSize?: string;
@@ -23,6 +24,7 @@ function OnHoverExpand({
   data, 
   orientation = 'horizontal',
   className = '',
+  cardClassName = '',
   cardHeight = '400px',
   cardWidth = '5vw',
   expandedSize = '20vw',
@@ -142,7 +144,7 @@ function OnHoverExpand({
             ref={(el) => {
               if (el) cardRefs.current[index] = el;
             }}
-            className={`relative rounded-4xl overflow-hidden cursor-pointer ${getOriginClass(index)}`}
+            className={`relative rounded-4xl overflow-hidden cursor-pointer ${getOriginClass(index)} ${cardClassName}`}
             style={getCardStyle(index)}
             onMouseEnter={() => handleMouseEnter(index)}
           >
@@ -177,4 +179,4 @@ function OnHoverExpand({
 }
 
 
-export default OnHoverExpand
+export { OnHoverExpand }

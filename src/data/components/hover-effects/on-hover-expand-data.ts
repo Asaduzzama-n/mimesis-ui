@@ -5,7 +5,7 @@ const {  nineTailBlue, nineTailFox, nineTailRed, itachi, itachi2, itachiXSasuke 
 
 
 
-export const on_hover_data = [
+export const onHoverExpandData = [
 {
       src: itachiXSasuke,
       alt: "Illustrations by my fav AarzooAly",
