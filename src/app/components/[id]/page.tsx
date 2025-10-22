@@ -27,29 +27,37 @@ export default async function ComponentPage({ params }: ComponentPageProps) {
   const renderComponent = () => {
     if (id === 'on-hover-expand') {
       return (
-        <div className="space-y-8">
-          <div>
+        <div className="space-y-8 w-full">
+          <div className="w-full">
             <h3 className="text-lg font-semibold mb-4">Horizontal Layout</h3>
-            <div className="overflow-x-auto">
-              <OnHoverExpand
-                data={onHoverExpandData}
-                orientation="horizontal"
-                className="min-w-[800px] lg:max-w-4xl"
-                cardClassName="bg-card border rounded-lg shadow-sm"
-              />
+            <div className="w-full overflow-x-auto bg-gray-50 dark:bg-gray-900 rounded-lg p-4">
+              <div className="min-w-[600px] w-full flex justify-center">
+                <OnHoverExpand
+                  data={onHoverExpandData}
+                  orientation="horizontal"
+                  className="w-full max-w-4xl"
+                  cardClassName="bg-card border rounded-lg shadow-sm"
+                  expandedSize="300px"
+                  collapsedSize="80px"
+                  cardHeight="240px"
+                />
+              </div>
             </div>
           </div>
-          <div>
+          <div className="w-full">
             <h3 className="text-lg font-semibold mb-4">Vertical Layout</h3>
-            <div className="flex justify-center">
-              <OnHoverExpand
-                data={onHoverExpandData.slice(0, 3)}
-                orientation="vertical"
-                className="max-w-sm w-full"
-                cardClassName="bg-card border rounded-lg shadow-sm"
-                expandedSize="300px"
-                collapsedSize="100px"
-              />
+            <div className="w-full flex justify-center bg-gray-50 dark:bg-gray-900 rounded-lg p-4">
+              <div className="w-full max-w-xs">
+                <OnHoverExpand
+                  data={onHoverExpandData.slice(0, 4)}
+                  orientation="vertical"
+                  className="w-full"
+                  cardClassName="bg-card border rounded-lg shadow-sm"
+                  expandedSize="200px"
+                  collapsedSize="60px"
+                  cardWidth="280px"
+                />
+              </div>
             </div>
           </div>
         </div>
@@ -286,21 +294,21 @@ export { OnHoverExpand }`;
   ];
 
   return (
-    <div className="flex gap-8">
+    <div className="flex flex-col lg:flex-row gap-8 lg:gap-12 min-h-screen w-full max-w-full">
       {/* Main Content */}
-      <main className="flex-1 min-w-0">
+      <main className="flex-1 min-w-0 overflow-x-hidden w-full max-w-full">
         {/* Header */}
-        <div className="mb-8">
-          <div className="flex flex-col sm:flex-row sm:items-center gap-4 mb-4">
-            <h1 className="text-2xl sm:text-3xl font-bold">{component.name}</h1>
+        <div className="mb-6 sm:mb-8">
+          <div className="flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-4 mb-4">
+            <h1 className="text-xl sm:text-2xl lg:text-3xl font-bold break-words">{component.name}</h1>
             <Badge variant={component.difficulty === 'beginner' ? 'default' : component.difficulty === 'intermediate' ? 'secondary' : 'destructive'}>
               {component.difficulty}
             </Badge>
           </div>
-          <p className="text-muted-foreground text-base sm:text-lg mb-4">{component.description}</p>
+          <p className="text-muted-foreground text-sm sm:text-base lg:text-lg mb-4 leading-relaxed">{component.description}</p>
           <div className="flex flex-wrap gap-2">
             {component.tags.map((tag) => (
-              <Badge key={tag} variant="outline">
+              <Badge key={tag} variant="outline" className="text-xs sm:text-sm">
                 {tag}
               </Badge>
             ))}
@@ -308,85 +316,84 @@ export { OnHoverExpand }`;
         </div>
 
         {/* Mobile Table of Contents */}
-        <div className="lg:hidden mb-8">
+        <div className="lg:hidden mb-6 sm:mb-8">
           <MobileTableOfContents sections={sections} />
         </div>
 
           {/* Scrollable Sections */}
-          <div className="space-y-12">
+          <div className="space-y-8 sm:space-y-10 lg:space-y-12 w-full max-w-full">
         {/* Preview Section */}
-        <section id="preview">
-          <h2 className="text-2xl font-bold mb-6 border-b pb-2">Preview</h2>
-          <div className="border rounded-lg p-4 sm:p-6 bg-background">
-            {renderComponent()}
+        <section id="preview" className="w-full max-w-full">
+          <h2 className="text-lg sm:text-xl lg:text-2xl font-bold mb-4 sm:mb-6 border-b pb-2">Preview</h2>
+          <div className="border rounded-lg p-3 sm:p-4 lg:p-6 bg-background overflow-x-hidden w-full max-w-full">
+            <div className="w-full max-w-full overflow-x-auto">
+              {renderComponent()}
+            </div>
           </div>
         </section>
 
         {/* Installation Section */}
-        <section id="installation">
-          <h2 className="text-2xl font-bold mb-6 border-b pb-2">Installation</h2>
-          <div className="space-y-6">
-            <div>
-              <h3 className="text-lg font-semibold mb-4">Install Dependencies</h3>
-              <CodeBlock
-                code={installationCode}
-                language={component.installation?.language || "bash"}
-                title="Install Dependencies"
-              />
-            </div>
+        <section id="installation" className="w-full max-w-full">
+          <h2 className="text-lg sm:text-xl lg:text-2xl font-bold mb-4 sm:mb-6 border-b pb-2">Installation</h2>
+          <div className="w-full max-w-full">
+            <CodeBlock
+              code={installationCode}
+              language="bash"
+              title="Installation"
+              className="border rounded-lg overflow-hidden"
+            />
           </div>
         </section>
 
         {/* Usage Section */}
-        <section id="usage">
-          <h2 className="text-2xl font-bold mb-6 border-b pb-2">Usage</h2>
-          <div className="space-y-6">
-            <div>
-              <h3 className="text-lg font-semibold mb-4">Basic Usage</h3>
-              <CodeBlock
-                code={usageCode}
-                language={component.usage?.language || "tsx"}
-                title="Basic Usage"
-              />
-            </div>
+        <section id="usage" className="w-full max-w-full">
+          <h2 className="text-lg sm:text-xl lg:text-2xl font-bold mb-4 sm:mb-6 border-b pb-2">Usage</h2>
+          <div className="w-full max-w-full">
+            <CodeBlock
+              code={usageCode}
+              language={component.usage?.language || "tsx"}
+              title="Basic Usage"
+              className="border rounded-lg overflow-hidden"
+            />
           </div>
         </section>
 
         {/* Component Code Section */}
-        <section id="component-code">
-          <h2 className="text-2xl font-bold mb-6 border-b pb-2">Component Code</h2>
-          <div>
+        <section id="component-code" className="w-full max-w-full">
+          <h2 className="text-lg sm:text-xl lg:text-2xl font-bold mb-4 sm:mb-6 border-b pb-2">Component Code</h2>
+          <div className="w-full max-w-full">
             <CodeBlock
               code={componentCode}
               language="tsx"
               title="OnHoverExpand Component"
+              className="border rounded-lg overflow-hidden"
             />
           </div>
         </section>
 
         {/* Props Section */}
-        <section id="props">
-          <h2 className="text-2xl font-bold mb-6 border-b pb-2">Props</h2>
-          <div className="border rounded-lg overflow-hidden">
-            <div className="overflow-x-auto">
-              <table className="w-full min-w-[600px]">
+        <section id="props" className="w-full max-w-full">
+          <h2 className="text-lg sm:text-xl lg:text-2xl font-bold mb-4 sm:mb-6 border-b pb-2">Props</h2>
+          <div className="border rounded-lg overflow-hidden w-full max-w-full">
+            <div className="overflow-x-auto w-full max-w-full">
+              <table className="w-full min-w-[500px] sm:min-w-[600px]">
                 <thead className="bg-muted">
                   <tr>
-                    <th className="text-left p-3 sm:p-4 font-semibold text-sm">Prop</th>
-                    <th className="text-left p-3 sm:p-4 font-semibold text-sm">Type</th>
-                    <th className="text-left p-3 sm:p-4 font-semibold text-sm">Default</th>
-                    <th className="text-left p-3 sm:p-4 font-semibold text-sm">Description</th>
+                    <th className="text-left p-2 sm:p-3 lg:p-4 font-semibold text-xs sm:text-sm">Prop</th>
+                    <th className="text-left p-2 sm:p-3 lg:p-4 font-semibold text-xs sm:text-sm">Type</th>
+                    <th className="text-left p-2 sm:p-3 lg:p-4 font-semibold text-xs sm:text-sm">Default</th>
+                    <th className="text-left p-2 sm:p-3 lg:p-4 font-semibold text-xs sm:text-sm">Description</th>
                   </tr>
                 </thead>
                 <tbody>
                   {component.props.map((prop, index) => (
                     <tr key={prop.name} className={index % 2 === 0 ? 'bg-background' : 'bg-muted/50'}>
-                      <td className="p-3 sm:p-4 font-mono text-xs sm:text-sm">{prop.name}</td>
-                      <td className="p-3 sm:p-4 font-mono text-xs sm:text-sm text-muted-foreground">{prop.type}</td>
-                      <td className="p-3 sm:p-4 font-mono text-xs sm:text-sm text-muted-foreground">
+                      <td className="p-2 sm:p-3 lg:p-4 font-mono text-xs break-all">{prop.name}</td>
+                      <td className="p-2 sm:p-3 lg:p-4 font-mono text-xs text-muted-foreground break-all">{prop.type}</td>
+                      <td className="p-2 sm:p-3 lg:p-4 font-mono text-xs text-muted-foreground break-all">
                         {prop.default || '-'}
                       </td>
-                      <td className="p-3 sm:p-4 text-xs sm:text-sm">{prop.description}</td>
+                      <td className="p-2 sm:p-3 lg:p-4 text-xs sm:text-sm break-words">{prop.description}</td>
                     </tr>
                   ))}
                 </tbody>
@@ -396,18 +403,21 @@ export { OnHoverExpand }`;
         </section>
 
         {/* Examples Section */}
-        <section id="examples">
-          <h2 className="text-2xl font-bold mb-6 border-b pb-2">Examples</h2>
-          <div className="space-y-8">
+        <section id="examples" className="w-full max-w-full">
+          <h2 className="text-lg sm:text-xl lg:text-2xl font-bold mb-4 sm:mb-6 border-b pb-2">Examples</h2>
+          <div className="space-y-6 sm:space-y-8 w-full max-w-full">
             {component.examples.map((example, index) => (
-              <div key={index}>
-                <h3 className="text-lg font-semibold mb-4">{example.name}</h3>
-                <p className="text-muted-foreground mb-4 text-sm sm:text-base">{example.description}</p>
-                <CodeBlock
-                  code={example.code}
-                  language="tsx"
-                  title={example.name}
-                />
+              <div key={index} className="w-full max-w-full">
+                <h3 className="text-base sm:text-lg font-semibold mb-3 sm:mb-4 break-words">{example.name}</h3>
+                <p className="text-muted-foreground mb-3 sm:mb-4 text-xs sm:text-sm lg:text-base leading-relaxed">{example.description}</p>
+                <div className="w-full max-w-full">
+                  <CodeBlock
+                    code={example.code}
+                    language="tsx"
+                    title={example.name}
+                    className="border rounded-lg overflow-hidden"
+                  />
+                </div>
               </div>
             ))}
           </div>
@@ -416,8 +426,8 @@ export { OnHoverExpand }`;
         </main>
 
         {/* Desktop Table of Contents */}
-         <aside className="hidden lg:block w-64 flex-shrink-0 border-l pl-8">
-           <div className="sticky top-8">
+         <aside className="hidden lg:block w-56 xl:w-64 flex-shrink-0 border-l pl-4 lg:pl-6 xl:pl-8">
+           <div className="sticky top-8 overflow-y-auto max-h-[calc(100vh-8rem)]">
              <TableOfContents sections={sections} />
            </div>
          </aside>

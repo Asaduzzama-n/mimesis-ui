@@ -15,7 +15,7 @@ export default function ComponentsLayout({
         <MobileSidebar />
         
         {/* Desktop Sidebar */}
-        <aside className="hidden lg:block w-64 bg-background sticky top-16 h-[calc(100vh-4rem)] overflow-y-auto border-r">
+        <aside className="hidden lg:block w-64 bg-background sticky top-16 h-[calc(100vh-4rem)] overflow-y-auto overflow-x-hidden border-r">
           <Sidebar />
         </aside>
         

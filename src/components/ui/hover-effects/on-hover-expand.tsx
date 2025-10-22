@@ -100,14 +100,15 @@ function OnHoverExpand({
 
   // Dynamic styles based on orientation
   const containerClass = orientation === 'horizontal' 
-    ? 'flex items-center justify-center relative gap-1'
-    : 'flex flex-col items-center justify-center relative gap-1';
+    ? 'flex items-center justify-center relative gap-1 w-full overflow-hidden'
+    : 'flex flex-col items-center justify-center relative gap-1 w-full overflow-hidden';
 
   const getCardStyle = (index: number) => {
     const baseStyle = {
       willChange: orientation === 'horizontal' ? 'width, transform' : 'height, transform',
       backfaceVisibility: 'hidden' as const,
-      perspective: 1000
+      perspective: 1000,
+      flexShrink: 0
     };
 
     if (orientation === 'horizontal') {
@@ -115,14 +116,16 @@ function OnHoverExpand({
         ...baseStyle,
         height: cardHeight,
         width: index === 0 ? expandedSize : collapsedSize,
-        transformOrigin: index === 0 ? 'left center' : 'right center'
+        transformOrigin: index === 0 ? 'left center' : 'right center',
+        minWidth: collapsedSize
       };
     } else {
       return {
         ...baseStyle,
         width: cardWidth,
         height: index === 0 ? expandedSize : collapsedSize,
-        transformOrigin: index === 0 ? 'top center' : 'bottom center'
+        transformOrigin: index === 0 ? 'top center' : 'bottom center',
+        minHeight: collapsedSize
       };
     }
   };

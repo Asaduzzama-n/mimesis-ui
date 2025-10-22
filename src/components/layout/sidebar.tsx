@@ -45,8 +45,8 @@ export function Sidebar({ className }: SidebarProps) {
   };
 
   return (
-    <aside className={cn("w-64 bg-background h-full", className)}>
-      <div className="p-4 space-y-4">
+    <aside className={cn("w-64 bg-background h-full overflow-x-hidden", className)}>
+      <div className="p-4 space-y-4 overflow-x-hidden">
         {/* Search */}
         <div className="relative">
           <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
@@ -81,7 +81,10 @@ export function Sidebar({ className }: SidebarProps) {
                   {pathname === `/components/${component.id}` && (
                     <div className="w-2 h-2 bg-green-500 rounded-full flex-shrink-0" />
                   )}
-                  <span className={pathname !== `/components/${component.id}` ? "ml-4" : ""}>
+                  <span className={cn(
+                    "truncate flex-1 text-left",
+                    pathname !== `/components/${component.id}` ? "ml-4" : ""
+                  )}>
                     {component.name}
                   </span>
                 </Link>
@@ -130,7 +133,10 @@ export function Sidebar({ className }: SidebarProps) {
                           {pathname === `/components/${component.id}` && (
                             <div className="w-2 h-2 bg-green-500 rounded-full flex-shrink-0" />
                           )}
-                          <span className={pathname !== `/components/${component.id}` ? "ml-4" : ""}>
+                          <span className={cn(
+                            "truncate flex-1 text-left",
+                            pathname !== `/components/${component.id}` ? "ml-4" : ""
+                          )}>
                             {component.name}
                           </span>
                         </Link>
